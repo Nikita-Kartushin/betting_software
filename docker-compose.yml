@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=agent
+      - MONGO_INITDB_ROOT_PASSWORD=1123581321
+      - MONGO_INITDB_DATABASE=betting-software
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  betting_software:
+    build: .
+    ports:
+      - "8000:8000"
+
+    network_mode: host

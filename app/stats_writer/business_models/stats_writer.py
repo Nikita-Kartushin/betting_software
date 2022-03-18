@@ -25,3 +25,12 @@ class StatsWriterBusinessModel:
     async def delete_bode_request(self, key: str):
         betting_software_collection = mongo_session()[self.mongo_collection]
         await betting_software_collection.delete_one({'key': key})
+
+    async def update_body_request(self, key: str, body_request: dict):
+        new_key = generate_key_from_dict(body_request)
+
+        betting_software_collection = mongo_session()[self.mongo_collection]
+        await betting_software_collection.replace_one({'key': key}, {'key': new_key, 'body': body_request})
+
+        return new_key
+

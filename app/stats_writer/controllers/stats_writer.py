@@ -14,7 +14,7 @@ class StatsWriterController(tornado.web.RequestHandler):
         :return:
         """
         key = self.get_query_argument('key')
-        logger.info(f'Incoming request. Get body_request for key {key}')
+        logger.info(f'Incoming request get. Get body_request for key {key}')
 
         stats_writer_business_model = StatsWriterBusinessModel()
         body_request = await stats_writer_business_model.get_body_request(key=key)
@@ -34,11 +34,11 @@ class StatsWriterController(tornado.web.RequestHandler):
         :return:
         """
         body = json.loads(self.request.body)
-        logger.info(f'Incoming request. Add body_request')
+        logger.info(f'Incoming request post. Add body_request')
 
         stats_writer_business_model = StatsWriterBusinessModel()
-        await stats_writer_business_model.add_body_request(body)
-        self.write('Body request was added!')
+        key = await stats_writer_business_model.add_body_request(body)
+        self.write(key)
 
     async def delete(self):
         """
@@ -49,11 +49,26 @@ class StatsWriterController(tornado.web.RequestHandler):
         :return:
         """
         key = self.get_query_argument('key')
-        logger.info(f'Incoming request. Get body_request for key {key}')
+        logger.info(f'Incoming request delete. Get body_request for key {key}')
 
         stats_writer_business_model = StatsWriterBusinessModel()
         await stats_writer_business_model.delete_bode_request(key=key)
         self.write('Body request was deleted!')
 
-    def put(self):
-        pass
+    async def put(self):
+        """
+        @api {put} /api/update?key=key Изменение записи в БД по ключу
+        @apiQueryParams
+            key - ключ, по которому изменяется тело запроса
+
+        :return:
+        """
+        key = self.get_query_argument('key')
+        body = json.loads(self.request.body)
+        logger.info(f'Incoming request update. Get body_request for key {key}')
+
+        stats_writer_business_model = StatsWriterBusinessModel()
+        new_key = await stats_writer_business_model.update_body_request(key=key, body_request=body)
+
+        self.write(new_key)
+

@@ -14,6 +14,9 @@ class StatsWriterStatisticsBusinessModel:
         async for doc in motor_cursor:
             duplicates_count += doc.get('count') - 1
 
+        if count == duplicates_count - 1:
+            return 100
+
         if count == 0:
             return 0
 
