@@ -1,0 +1,4 @@
+.env
+.idea
+.gitattributes
+app/logs/*
