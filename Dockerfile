@@ -2,17 +2,16 @@ FROM python:3.8
 
 USER root
 
-COPY app /var/www/betting_software
+COPY ./app /opt/betting_software
 COPY requirements.txt /tmp/requirements.txt
 
 WORKDIR /tmp
 
 RUN pip3 install -r requirements.txt
 
-WORKDIR /var/www/betting_software
+WORKDIR /opt/betting_software
+RUN mkdir -p logs && \
+    touch logs/log.txt
 
-RUN chmod -R 777 /var/www
-
-EXPOSE 8000 8000
-
-CMD ['run.py']
+ENV PYTHONPATH $PYTHONPATH:/opt/betting_software
+CMD ["python", "run.py"]

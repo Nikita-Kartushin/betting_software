@@ -4,7 +4,7 @@ from database import mongo_session
 class StatsWriterStatisticsBusinessModel:
     mongo_collection = 'user'
 
-    def get_count_duplicates(self):
+    async def get_count_duplicates(self):
         betting_software_collection = mongo_session()[self.mongo_collection]
         motor_cursor = betting_software_collection.aggregate([{"$sortByCount": "$key"}])
 

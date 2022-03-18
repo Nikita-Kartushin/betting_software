@@ -11,7 +11,7 @@ class StatsWriterStatistics(tornado.web.RequestHandler):
 
         :return:
         """
-        result = StatsWriterStatisticsBusinessModel().get_count_duplicates()
+        result = await StatsWriterStatisticsBusinessModel().get_count_duplicates()
 
         self.write(str(result))
 
