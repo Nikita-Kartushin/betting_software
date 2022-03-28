@@ -1,6 +1,6 @@
 mongo:
   port: 27017
-  host: localhost
+  host: 127.0.0.1
   password: 1123581321
   username: agent
   database: betting-software
