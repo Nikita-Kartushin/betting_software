@@ -8,7 +8,9 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=1123581321
       - MONGO_INITDB_DATABASE=betting-software
     ports:
-      - "27017:27017"
+      - "27017"
+
+    network_mode: host
 
     volumes:
       - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
